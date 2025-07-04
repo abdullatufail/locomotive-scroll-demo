@@ -26,8 +26,10 @@ const LoadingScreen = ({ onLoadComplete }: LoadingScreenProps) => {
     tl.from(".loading-title", {
       y: 50,
       opacity: 0,
-      duration: 0.8,
-      ease: "power2.out"
+      // duration: 0.8,
+      duration: 0.2,
+      ease: "power2.out",
+      onComplete: onLoadComplete
     })
     .from(".loading-bar", {
       scaleX: 0,
@@ -44,7 +46,7 @@ const LoadingScreen = ({ onLoadComplete }: LoadingScreenProps) => {
       duration: 1,
       ease: "power2.inOut",
       delay: 0.5,
-      onComplete: onLoadComplete
+      
     });
   }, []);
 
