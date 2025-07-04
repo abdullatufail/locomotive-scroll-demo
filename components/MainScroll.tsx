@@ -64,19 +64,21 @@ const MainScroll = () => {
       maskComposite: "intersect",
       scale: 1, // scale starts at 1
     });
+    const startDuration = 0.25;
+    const middleDuration =0.2;
 
     timeline
       .addLabel("start")
       .to(".bg-img", {
         clipPath: "inset(0% )",
-        duration: 0.4,
+        duration: startDuration,
       })
       .from(
         ".nav",
         {
           y: -70,
-          delay: 0.2,
-          duration: 0.2,
+          delay: startDuration/2,
+          duration: startDuration/2,
           ease: "power1.inOut",
         },
         "start"
@@ -86,8 +88,8 @@ const MainScroll = () => {
         {
           y: 200,
           ease: "power1.out",
-          delay: 0.2,
-          duration: 0.2,
+          delay: startDuration/2,
+          duration: startDuration/2,
         },
         "start"
       )
@@ -96,8 +98,8 @@ const MainScroll = () => {
         {
           x: -250,
           ease: "power1.out",
-          delay: 0.2,
-          duration: 0.2,
+           delay: startDuration/2,
+          duration: startDuration/2,
         },
         "start"
       )
@@ -109,7 +111,7 @@ const MainScroll = () => {
           WebkitMask:
             "linear-gradient(to right, black 0%, black calc(50% - 75px), transparent calc(50% - 75px), transparent calc(50% + 75px), black calc(50% + 75px), black 100%), linear-gradient(to bottom, black 0%, black calc(50% - 100px), transparent calc(50% - 100px), transparent calc(50% + 100px), black calc(50% + 100px), black 100%)",
           mask: "linear-gradient(to right, black 0%, black calc(50% - 75px), transparent calc(50% - 75px), transparent calc(50% + 75px), black calc(50% + 75px), black 100%), linear-gradient(to bottom, black 0%, black calc(50% - 100px), transparent calc(50% - 100px), transparent calc(50% + 100px), black calc(50% + 100px), black 100%)",
-          duration: 0.4,
+          duration: middleDuration,
         },
         "middle"
       )
@@ -118,7 +120,7 @@ const MainScroll = () => {
       .to(".hero-1", {
         scale: 11,
 
-        duration: 0.6,
+        duration: 1-middleDuration-startDuration,
         ease: "power1.inOut",
       })
       .to(
@@ -126,7 +128,7 @@ const MainScroll = () => {
         {
           scale: 1.2, // Different scale for image
           // Optional: add rotation
-          duration: 0.6,
+          duration: 1-middleDuration-startDuration,
           ease: "power2.out",
         },
         "end"
@@ -136,7 +138,7 @@ const MainScroll = () => {
         {
           scale: 2.5, // Different scale for image
           // Optional: add rotation
-          duration: 0.6,
+          duration: 1-middleDuration-startDuration,
           ease: "power2.out",
         },
         "end"
@@ -145,8 +147,8 @@ const MainScroll = () => {
         ".nav",
         {
           y: -70,
-          duration: 0.4,
-          delay: 0.2,
+          duration: 2*(1-middleDuration-startDuration)/3,
+          delay: (1-middleDuration-startDuration)/3,
           ease: "power2.out",
         },
         "end"
@@ -165,8 +167,9 @@ const MainScroll = () => {
   return (
     <>
       {isLoading && <LoadingScreen onLoadComplete={handleLoadComplete} />}
+      
       <div className="w-full h-full">
-        <section className="hero w-full h-[300vh] bg-black ">
+        <section className="hero w-full h-[350vh] bg-black ">
           <div className="nav w-full h-20 flex justify-between fixed z-[60] text-white px-5 ">
             <p className="font-perfectly-nineties italic text-xl">first</p>
             <p className="font-perfectly-nineties italic text-xl">first</p>
@@ -206,7 +209,8 @@ const MainScroll = () => {
               </div>
             </div>
           </div>
-          <div className="h-[100vh] w-full"></div>
+          <div className="h-[110vh] w-full"></div>
+          
           <MiddleSection />
         </section>
         <section className=" w-full h-full bg-black  text-white">

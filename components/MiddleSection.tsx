@@ -9,12 +9,14 @@ const MiddleSection = () => {
   return (
     <div
       
-      className="h-[100vh] w-full text-white flex flex-col space-y-2 items-center pt-[50px]"
+      className="h-[140vh] w-full text-white flex flex-col space-y-2 items-center pt-[50px] relative"
     >
       
       <h1 className="font-perfectly-nineties text-7xl w-[30%] pb-2 text-center ">
         SECTION:02
       </h1>
+      
+     
       
       <div  className="flex relative items-center w-full gap-10 h-full justify-center ">
        

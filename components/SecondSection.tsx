@@ -65,12 +65,7 @@ const SecondSection = () => {
             );
           })}
 
-          <button
-            className="bg-gray-400 text-white cursor-pointer"
-            onClick={() => setHoveredIndex(4)}
-          >
-            My name
-          </button>
+          
         </div>
       </div>
 
