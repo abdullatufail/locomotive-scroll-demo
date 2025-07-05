@@ -3,24 +3,36 @@ import { cn } from "@/utils/cn";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const SecondSection = () => {
-  // ✅ Make sure this line exists and is correct
+  
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const flwRef = useRef(null);
+  const containerRef = useRef(null);
 
-  // Add this to debug the initial state
-  console.log("Component rendered, initial hoveredIndex:", hoveredIndex);
+  
 
-  useEffect(() => {
-    console.log("useEffect triggered, hoveredIndex:", hoveredIndex);
-    if (hoveredIndex !== null) {
-      console.log(`Item ${hoveredIndex + 1} is hovered`);
-    }
-  }, [hoveredIndex]);
+  useGSAP(()=>{
+    const follower = flwRef.current;
+    const container = containerRef.current;
+    const xTo = gsap.quickTo(follower, "x", { duration: 0.3, ease: "power2.out" });
+const yTo = gsap.quickTo(follower, "y", { duration: 0.3, ease: "power2.out" });
 
+document.addEventListener('mousemove', (e) => {
+  xTo(e.clientX);
+  yTo(e.clientY);
+});
+//  return () => {
+//     window.removeEventListener("mousemove", handleMouseMove);
+//   };
+
+  })
+  
+
+ 
   return (
-    <div className="cont w-full h-[100vh] flex flex-col px-10 justify-between pb-10">
+    <div className="cont w-full h-[100vh] flex flex-col px-10 justify-between pb-10 relative">
       <h1
         data-scroll-offset="300"
         className="font-perfectly-nineties text-8xl mt-5"
@@ -30,29 +42,23 @@ const SecondSection = () => {
       </h1>
       <div className="flex h-[50%] w-full">
         <div className="w-1/2"></div>
-        <div className="h-full w-[50%] flex flex-col">
+        <div ref={containerRef} className="h-full w-[50%] flex flex-col">
           {[...Array(5)].map((_, i) => {
-            const isHovered = hoveredIndex === i;
+            // const isHovered = hoveredIndex === i;
 
             return (
               <div
-                key={i}
+                key={i+1}
                 className={cn(
-                  "text-white h-1/5 w-full font-perfectly-nineties italic text-3xl flex items-center transition-all duration-300 cursor-pointer border border-red-500",
-                  i === 4 ? "border-b-[1px] border-t-[1px]" : "border-t-[1px]",
-                  isHovered && "bg-white/10 text-blue-400 scale-105"
+                  "text-white h-1/5 w-full font-perfectly-nineties italic text-3xl flex items-center  cursor-pointer z-[70]",
+                  i === 4 ? "border-b-[1px] border-t-[1px]" : "border-t-[1px]"
                 )}
                 onClick={() => {
-                  console.log("CLICKED ITEM:", i);
-                  console.log(
-                    "setHoveredIndex function:",
-                    typeof setHoveredIndex
-                  );
-                  setHoveredIndex(i);
+                  setHoveredIndex(i+1);
                 }}
                 onMouseEnter={() => {
                   console.log("MOUSE ENTERED ITEM:", i);
-                  setHoveredIndex(i);
+                  setHoveredIndex(i+1);
                 }}
                 onMouseLeave={() => {
                   console.log("MOUSE LEFT ITEM");
@@ -64,14 +70,12 @@ const SecondSection = () => {
               </div>
             );
           })}
-
-          
         </div>
       </div>
 
       {/* Show image when any item is hovered */}
-      {false && (
-        <div className="flw w-[17%] h-[50%] absolute right-10 top-1/2 transform -translate-y-1/2 transition-all duration-300">
+      {    (
+        <div ref={flwRef} className={cn(" w-[17%] h-[50%] absolute ", hoveredIndex !==null ?"opacity-100":"opacity-0")}>
           <Image
             src={"/2.png"}
             alt="center-img"
