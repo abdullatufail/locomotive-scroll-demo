@@ -24,21 +24,7 @@ const SecondSection = () => {
       ease: "power2.out",
     });
 
-    if (hoveredIndex !== null) {
-      // Animate on hover
-      gsap.to(cardsRef.current, {
-        scale: 1.1,
-        duration: 0.3,
-        ease: "power2.out"
-      });
-    } else {
-      // Animate on hover out
-      gsap.to(cardsRef.current, {
-        scale: 1,
-        duration: 0.3,
-        ease: "power2.out"
-      });
-    }
+    
 
     
     
@@ -50,6 +36,30 @@ const SecondSection = () => {
 
     
   });
+
+  useGSAP(() => {
+    // Reset all cards first
+    cardsRef.current.forEach((card) => {
+      if (card) {
+        gsap.set(card, { y: 100 });
+        gsap.to(card, {
+          y:100,
+          
+          duration: 0.4,
+          ease: "power2.out"
+        });
+      }
+    });
+
+    // Animate the hovered card
+    if (hoveredIndex !== null && cardsRef.current[hoveredIndex]) {
+      gsap.to(cardsRef.current[hoveredIndex], {
+        y:0,
+        duration: 0.3,
+        ease: "power2.out"
+      });
+    }
+  }, [hoveredIndex]); 
 
   return (
     <div className="cont w-full h-[100vh] flex flex-col px-10 justify-between pb-10 relative">
@@ -71,12 +81,9 @@ const SecondSection = () => {
             return (
               <div
                 key={i + 1}
-                ref={(el) => {
-                  if (!cardsRef.current) cardsRef.current = [];
-                  cardsRef.current[i+1] = el;
-                }}
+               
                 className={cn(
-                  "text-white h-1/5 w-full font-perfectly-nineties italic text-3xl flex justify-between items-center px-3 cursor-pointer z-[70]",
+                  "text-white overflow-hidden h-1/5 w-full relative font-perfectly-nineties italic text-3xl flex justify-between items-center px-3 cursor-pointer z-[70]",
                   i === 4 ? "border-b-[1px] border-t-[1px]" : "border-t-[1px]"
                 )}
                 onClick={() => {
@@ -91,6 +98,10 @@ const SecondSection = () => {
                   setHoveredIndex(null);
                 }}
               >
+                <div  ref={(el) => {
+                  if (!cardsRef.current) cardsRef.current = [];
+                  cardsRef.current[i+1] = el;
+                }} className="h-full w-full bg-amber-50 absolute left-0"></div>
                 <div>Portrait</div>
                 <div className="text-sm">0{i + 1}</div>
               </div>
