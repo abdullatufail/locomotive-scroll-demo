@@ -1,13 +1,14 @@
 "use client"
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface LoadingScreenProps {
   onLoadComplete: () => void;
 }
 
 const LoadingScreen = ({ onLoadComplete }: LoadingScreenProps) => {
+  const [percent,setPercent] = useState(0);
   // Lock scroll when loading screen mounts
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -29,24 +30,31 @@ const LoadingScreen = ({ onLoadComplete }: LoadingScreenProps) => {
       // duration: 0.8,
       duration: 0.2,
       ease: "power2.out",
-      onComplete: onLoadComplete
+      
     })
     .from(".loading-bar", {
       scaleX: 0,
       duration: 0.6,
-      ease: "power2.out"
+      ease: "power2.out",
+     
     }, "-=0.4")
     .to(".loading-progress", {
       width: "100%",
       duration: 2,
-      ease: "power2.out"
+      ease: "power2.out",
+       onUpdate:function(){
+        const progress = this.progress();
+        setPercent(Math.round(progress*100))
+
+      }
     })
     .to(".loading-screen", {
       y: "-100%",
-      duration: 1,
+      
       ease: "power2.inOut",
       delay: 0.5,
-      
+      onComplete: onLoadComplete,
+      duration: 1,
     });
   }, []);
 
@@ -57,21 +65,14 @@ const LoadingScreen = ({ onLoadComplete }: LoadingScreenProps) => {
           GSAP SCROLLER
         </h1>
         
-        <div className="loading-bar w-80 h-2 bg-white/20 rounded-full mx-auto mb-4 overflow-hidden">
-          <div className="loading-progress h-full bg-white rounded-full w-0"></div>
+        <div className="loading-bar w-80 h-2 bg-white/20  mx-auto mb-4 overflow-hidden">
+          <div className="loading-progress h-full bg-white  w-0"></div>
+        </div>
+        <div>
+          <h1 className="text-6xl font-perfectly-nineties italic text-white">{percent}%</h1>
         </div>
         
-        <div className="flex space-x-1 justify-center mt-8">
-          {[...Array(5)].map((_, i) => (
-            <div
-              key={i}
-              className="w-2 h-8 bg-white rounded-full"
-              style={{
-                animation: `pulse 1.5s ease-in-out ${i * 0.1}s infinite`
-              }}
-            />
-          ))}
-        </div>
+        
       </div>
     </div>
   );

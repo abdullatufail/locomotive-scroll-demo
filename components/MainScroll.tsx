@@ -64,8 +64,11 @@ const MainScroll = () => {
       maskComposite: "intersect",
       scale: 1, // scale starts at 1
     });
+    gsap.set(".bg-img", {
+      scale: 0,
+    });
     const startDuration = 0.25;
-    const middleDuration =0.2;
+    const middleDuration = 0.2;
 
     timeline
       .addLabel("start")
@@ -77,8 +80,8 @@ const MainScroll = () => {
         ".nav",
         {
           y: -70,
-          delay: startDuration/2,
-          duration: startDuration/2,
+          delay: startDuration / 2,
+          duration: startDuration / 2,
           ease: "power1.inOut",
         },
         "start"
@@ -88,8 +91,8 @@ const MainScroll = () => {
         {
           y: 200,
           ease: "power1.out",
-          delay: startDuration/2,
-          duration: startDuration/2,
+          delay: startDuration / 2,
+          duration: startDuration / 2,
         },
         "start"
       )
@@ -98,8 +101,8 @@ const MainScroll = () => {
         {
           x: -250,
           ease: "power1.out",
-           delay: startDuration/2,
-          duration: startDuration/2,
+          delay: startDuration / 2,
+          duration: startDuration / 2,
         },
         "start"
       )
@@ -120,7 +123,7 @@ const MainScroll = () => {
       .to(".hero-1", {
         scale: 11,
 
-        duration: 1-middleDuration-startDuration,
+        duration: 1 - middleDuration - startDuration,
         ease: "power1.inOut",
       })
       .to(
@@ -128,7 +131,7 @@ const MainScroll = () => {
         {
           scale: 1.2, // Different scale for image
           // Optional: add rotation
-          duration: 1-middleDuration-startDuration,
+          duration: 1 - middleDuration - startDuration,
           ease: "power2.out",
         },
         "end"
@@ -138,7 +141,7 @@ const MainScroll = () => {
         {
           scale: 2.5, // Different scale for image
           // Optional: add rotation
-          duration: 1-middleDuration-startDuration,
+          duration: 1 - middleDuration - startDuration,
           ease: "power2.out",
         },
         "end"
@@ -147,8 +150,8 @@ const MainScroll = () => {
         ".nav",
         {
           y: -70,
-          duration: 2*(1-middleDuration-startDuration)/3,
-          delay: (1-middleDuration-startDuration)/3,
+          duration: (2 * (1 - middleDuration - startDuration)) / 3,
+          delay: (1 - middleDuration - startDuration) / 3,
           ease: "power2.out",
         },
         "end"
@@ -164,10 +167,36 @@ const MainScroll = () => {
       );
   }, []);
 
+  useGSAP(() => {
+    if (!isLoading) {
+      const tl = gsap.timeline();
+      tl.fromTo(
+        ".bg-img",
+        {
+          scale: 0.3,
+          y: 700,
+        },
+        {
+          y: 0,
+          duration: 0.5,
+          ease: "power2.out",
+        }
+      );
+      tl.to(
+        ".bg-img",
+        
+        {
+          scale: 1,
+          duration: 0.9,
+          ease: "power2.in",
+        }
+      );
+    }
+  }, [isLoading]);
   return (
     <>
       {isLoading && <LoadingScreen onLoadComplete={handleLoadComplete} />}
-      
+
       <div className="w-full h-full">
         <section className="hero w-full h-[350vh] bg-black ">
           <div className="nav w-full h-20 flex justify-between fixed z-[60] text-white px-5 ">
@@ -210,7 +239,7 @@ const MainScroll = () => {
             </div>
           </div>
           <div className="h-[110vh] w-full"></div>
-          
+
           <MiddleSection />
         </section>
         <section className=" w-full h-full bg-black  text-white">
