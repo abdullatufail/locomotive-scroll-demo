@@ -14,7 +14,7 @@ const SecondSection = () => {
 
   useGSAP(() => {
     const follower = flwRef.current;
-    
+
     const xTo = gsap.quickTo(follower, "x", {
       duration: 0.2,
       ease: "power2.out",
@@ -24,42 +24,33 @@ const SecondSection = () => {
       ease: "power2.out",
     });
 
-    
-
-    
-    
-
-    document.addEventListener("mousemove", (e) => {
+    const handleMouseMove = (e) => {
       xTo(e.clientX + 100);
       yTo(e.clientY - 300);
-    });
+    };
 
-    
+    document.addEventListener("mousemove", handleMouseMove);
+
+    // Cleanup
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+    };
   });
 
   useGSAP(() => {
-    // Reset all cards first
-    cardsRef.current.forEach((card) => {
+    // Animate all cards based on hover state
+    cardsRef.current.forEach((card, index) => {
       if (card) {
-        gsap.set(card, { y: 100 });
-        gsap.to(card, {
-          y:100,
-          
-          duration: 0.4,
-          ease: "power2.out"
-        });
+        const shouldExpand = hoveredIndex === index;
+        const tl = gsap.timeline();
+        tl.to(card, {
+          height: shouldExpand ? "100%" : "0%",
+          duration: shouldExpand ? 0.3 : 0.4,
+          ease: "power2.out",
+        })
       }
     });
-
-    // Animate the hovered card
-    if (hoveredIndex !== null && cardsRef.current[hoveredIndex]) {
-      gsap.to(cardsRef.current[hoveredIndex], {
-        y:0,
-        duration: 0.3,
-        ease: "power2.out"
-      });
-    }
-  }, [hoveredIndex]); 
+  }, [hoveredIndex]);
 
   return (
     <div className="cont w-full h-[100vh] flex flex-col px-10 justify-between pb-10 relative">
@@ -76,34 +67,35 @@ const SecondSection = () => {
         <div className="w-1/2"></div>
         <div ref={containerRef} className="h-full w-[50%] flex flex-col">
           {[...Array(5)].map((_, i) => {
-            // const isHovered = hoveredIndex === i;
-
             return (
               <div
-                key={i + 1}
-               
+                key={i}
                 className={cn(
-                  "text-white overflow-hidden h-1/5 w-full relative font-perfectly-nineties italic text-3xl flex justify-between items-center px-3 cursor-pointer z-[70]",
+                  "text-white h-1/5 w-full relative font-perfectly-nineties italic text-3xl flex justify-between items-center px-3 cursor-pointer z-[70]",
                   i === 4 ? "border-b-[1px] border-t-[1px]" : "border-t-[1px]"
                 )}
                 onClick={() => {
-                  setHoveredIndex(i + 1);
+                  setHoveredIndex(i);
                 }}
                 onMouseEnter={() => {
                   console.log("MOUSE ENTERED ITEM:", i);
-                  setHoveredIndex(i + 1);
+                  setHoveredIndex(i);
                 }}
                 onMouseLeave={() => {
                   console.log("MOUSE LEFT ITEM");
                   setHoveredIndex(null);
                 }}
               >
-                <div  ref={(el) => {
-                  if (!cardsRef.current) cardsRef.current = [];
-                  cardsRef.current[i+1] = el;
-                }} className="h-full w-full bg-amber-50 absolute left-0"></div>
-                <div>Portrait</div>
-                <div className="text-sm">0{i + 1}</div>
+                <div
+                  ref={(el) => {
+                    if (!cardsRef.current) cardsRef.current = [];
+                    cardsRef.current[i] = el;
+                  }}
+                  className="h-0 w-full bg-amber-50 absolute top-0 left-0"
+                >
+                </div>
+                <div className="text-black relative z-10">Portrait</div>
+                <div className="text-lg relative z-10">0{i + 1}</div>
               </div>
             );
           })}
@@ -111,25 +103,23 @@ const SecondSection = () => {
       </div>
 
       {/* Show image when any item is hovered */}
-      {
-        <div
-          ref={flwRef}
-          className={cn(
-            " w-[17%] h-[50%] absolute z-[80]",
-            hoveredIndex !== null ? "opacity-100" : "opacity-0"
-          )}
-        >
-          {hoveredIndex && (
-            <Image
-              src={`/hovered/${hoveredIndex}.png`}
-              alt="center-img"
-              width={1000}
-              height={1000}
-              className="w-full h-full object-cover"
-            />
-          )}
-        </div>
-      }
+      <div
+        ref={flwRef}
+        className={cn(
+          "w-[17%] h-[50%] absolute z-[80] transition-opacity duration-200",
+          hoveredIndex !== null ? "opacity-100" : "opacity-0"
+        )}
+      >
+        {hoveredIndex !== null && (
+          <Image
+            src={`/hovered/${hoveredIndex + 1}.png`}
+            alt="center-img"
+            width={1000}
+            height={1000}
+            className="w-full h-full object-cover"
+          />
+        )}
+      </div>
     </div>
   );
 };
