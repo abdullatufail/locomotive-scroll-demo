@@ -5,12 +5,14 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
+import ThirdSection from "./ThirdSection";
 
 const SecondSection = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const flwRef = useRef(null);
   const containerRef = useRef(null);
   const cardsRef = useRef([]);
+  const rootRef = useRef(null);
 
   useGSAP(() => {
     const follower = flwRef.current;
@@ -53,15 +55,16 @@ const SecondSection = () => {
   }, [hoveredIndex]);
 
   return (
-    <div className="cont w-full h-[100vh] flex flex-col px-10 justify-between pb-10 relative">
+    <>
+    <div ref={rootRef} className="cont w-full h-[100vh] flex flex-col px-10 justify-between pb-10 relative">
       <h1
         data-scroll-offset="300"
         className="font-perfectly-nineties text-8xl mt-5"
       >
-        <TextReveal>
-          ScrollTrigger & <br />
-          Intersection Observer{" "}
-        </TextReveal>
+        <TextReveal className = {"w-[60%] h-[60%] "} rootRef={rootRef}>
+          ScrollTrigger & </TextReveal>
+        <TextReveal className = {"w-[60%] h-[60%] "} rootRef={rootRef}>Intersection Observer </TextReveal>
+       
       </h1>
       <div className="flex h-[50%] w-full">
         <div className="w-1/2"></div>
@@ -71,7 +74,7 @@ const SecondSection = () => {
               <div
                 key={i}
                 className={cn(
-                  "text-white h-1/5 w-full relative font-perfectly-nineties italic text-3xl flex justify-between items-center px-3 cursor-pointer z-[70]",
+                  "text-white h-1/6 w-full relative font-perfectly-nineties italic text-3xl flex justify-between items-center px-3 cursor-pointer z-[70]",
                   i === 4 ? "border-b-[1px] border-t-[1px]" : "border-t-[1px]"
                 )}
                 onClick={() => {
@@ -121,6 +124,8 @@ const SecondSection = () => {
         )}
       </div>
     </div>
+        <ThirdSection />
+    </>
   );
 };
 
