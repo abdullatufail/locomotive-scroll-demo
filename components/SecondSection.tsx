@@ -124,7 +124,7 @@ const SecondSection = () => {
         )}
       </div>
     </div>
-        <ThirdSection />
+       
     </>
   );
 };

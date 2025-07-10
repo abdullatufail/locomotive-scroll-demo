@@ -46,6 +46,9 @@ const LoadingScreen = ({ onLoadComplete }: LoadingScreenProps) => {
         const progress = this.progress();
         setPercent(Math.round(progress*100))
 
+      },
+      onComplete:()=>{
+        window.scrollTo(0, 0);
       }
     })
     .to(".loading-screen", {
@@ -53,7 +56,10 @@ const LoadingScreen = ({ onLoadComplete }: LoadingScreenProps) => {
       
       ease: "power2.inOut",
       delay: 0.5,
-      onComplete: onLoadComplete,
+      onComplete:()=>{
+        window.scrollTo(0, 0);
+        onLoadComplete();
+      } ,
       duration: 1,
     });
   }, []);

@@ -26,18 +26,18 @@ const TextReveal = ({ className, children, rootRef }) => {
           if (entry.isIntersecting) {
             gsap.to(target.children, {
               y: 0,
-              duration: 0.5,
+              duration: 0.2,
               opacity: 1,
               ease: "power2.out",
-              stagger: 0.01, // Animate letters one by one
+              stagger: 0.05, // Animate letters one by one
             });
           }
-           
+          
         });
       },
       {
         root: root,
-        rootMargin: "90px",
+        rootMargin: "0px",
         threshold: 0.5,
       }
     );

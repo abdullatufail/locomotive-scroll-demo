@@ -20,7 +20,7 @@ const MiddleSection = () => {
       
       <div  className="flex relative items-center w-full gap-10 h-full justify-center ">
        
-        <div data-scroll data-scroll-speed="0.1" style={{scale:1.4}} className="absolute blur-sm scale-140 top-[-220px] left-[100px] center-img w-[14%] h-[50%]  ">
+        <div data-scroll data-scroll-speed="0.1" style={{scale:1.4}} className="absolute blur-sm scale-140 top-[-220px] left-[100px] center-img w-[18%] shadow-2xl h-[50%]  ">
           <Image
             src={"/2.png"}
             alt="center-img"
@@ -29,7 +29,7 @@ const MiddleSection = () => {
             className="w-full h-full object-cover"
           ></Image>
         </div>
-        <div data-scroll data-scroll-speed="0.3" style={{scale:0.8}} className="absolute top-[-290px] right-[100px] center-img w-[14%] h-[50%]  ">
+        <div data-scroll data-scroll-speed="0.3" style={{scale:0.8}} className="absolute top-[-290px] right-[100px] center-img w-[18%] shadow-2xl h-[50%]  ">
           <Image
             src={"/2.png"}
             alt="center-img"
@@ -38,7 +38,7 @@ const MiddleSection = () => {
             className="w-full h-full object-cover"
           ></Image>
         </div>
-        <div data-scroll data-scroll-speed="0.5" style={{scale:1}} className=" center-img absolute top-0 w-[14%] h-[50%]  ">
+        <div data-scroll data-scroll-speed="0.5" style={{scale:1}} className=" center-img absolute top-0 w-[18%] shadow-2xl h-[50%]  ">
           <Image
             src={"/2.png"}
             alt="center-img"
@@ -47,7 +47,7 @@ const MiddleSection = () => {
             className="w-full h-full object-cover"
           ></Image>
         </div>
-        <div data-scroll data-scroll-speed="0.27" style={{scale:0.7}} className="blur-md opacity-85 absolute top-[160px] right-[230px]  center-img w-[14%] h-[50%]  ">
+        <div data-scroll data-scroll-speed="0.27" style={{scale:0.7}} className="blur-md opacity-85 absolute top-[160px] right-[230px]  center-img w-[18%] shadow-2xl h-[50%]  ">
           <Image
             src={"/2.png"}
             alt="center-img"
@@ -56,7 +56,7 @@ const MiddleSection = () => {
             className="w-full h-full object-cover"
           ></Image>
         </div>
-        <div data-scroll data-scroll-speed="0.31" className="absolute top-[100px] left-[200px] center-img w-[14%] h-[50%]  ">
+        <div data-scroll data-scroll-speed="0.31" className="absolute top-[100px] left-[200px] center-img w-[18%] shadow-2xl h-[50%]  ">
           <Image
             src={"/2.png"}
             alt="center-img"

@@ -6,6 +6,7 @@ import SecondSection from "./SecondSection";
 import { useState } from "react";
 import LoadingScreen from "./LoadingScreen";
 import MiddleSection from "./MiddleSection";
+import ThirdSection from "./ThirdSection";
 
 gsap.registerPlugin(useGSAP);
 gsap.registerPlugin(ScrollTrigger);
@@ -18,7 +19,7 @@ const MainScroll = () => {
       start: "20% center",
       end: "bottom bottom",
       scrub: true,
-      markers: true,
+      
       snap: {
         snapTo: (progress) => {
           // Only snap when progress is between 0 and 0.2
@@ -64,9 +65,7 @@ const MainScroll = () => {
       maskComposite: "intersect",
       scale: 1, // scale starts at 1
     });
-    gsap.set(".bg-img", {
-      scale: 0,
-    });
+   
     const startDuration = 0.25;
     const middleDuration = 0.2;
 
@@ -80,6 +79,15 @@ const MainScroll = () => {
         ".nav",
         {
           y: -70,
+          delay: startDuration / 2,
+          duration: startDuration / 2,
+          ease: "power1.inOut",
+        },
+        "start"
+      ).from(
+        ".nav-2",
+        {
+          y: 70,
           delay: startDuration / 2,
           duration: startDuration / 2,
           ease: "power1.inOut",
@@ -155,6 +163,15 @@ const MainScroll = () => {
           ease: "power2.out",
         },
         "end"
+      ).to(
+        ".nav-2",
+        {
+          y: 70,
+          duration: (2 * (1 - middleDuration - startDuration)) / 3,
+          delay: (1 - middleDuration - startDuration) / 3,
+          ease: "power2.out",
+        },
+        "end"
       )
       .to(
         ".bg-img",
@@ -167,39 +184,19 @@ const MainScroll = () => {
       );
   }, []);
 
-  useGSAP(() => {
-    if (!isLoading) {
-      const tl = gsap.timeline();
-      tl.fromTo(
-        ".bg-img",
-        {
-          scale: 0.3,
-          y: 700,
-        },
-        {
-          y: 0,
-          duration: 0.5,
-          ease: "power2.out",
-        }
-      );
-      tl.to(
-        ".bg-img",
-        
-        {
-          scale: 1,
-          duration: 0.9,
-          ease: "power2.in",
-        }
-      );
-    }
-  }, [isLoading]);
+ 
   return (
     <>
       {isLoading && <LoadingScreen onLoadComplete={handleLoadComplete} />}
 
       <div className="w-full h-full">
         <section className="hero w-full h-[350vh] bg-black ">
-          <div className="nav w-full h-20 flex justify-between fixed z-[60] text-white px-5 ">
+          <div className="nav w-full h-20 flex justify-between fixed top-1 z-[60] text-white px-5 ">
+            <p className="font-perfectly-nineties italic text-xl">first</p>
+            <p className="font-perfectly-nineties italic text-xl">first</p>
+            <p className="font-perfectly-nineties italic text-xl">first</p>
+          </div>
+          <div className="nav-2 w-full h-20 flex justify-between fixed -bottom-[40px] z-[60] text-white px-5 ">
             <p className="font-perfectly-nineties italic text-xl">first</p>
             <p className="font-perfectly-nineties italic text-xl">first</p>
             <p className="font-perfectly-nineties italic text-xl">first</p>
@@ -220,21 +217,13 @@ const MainScroll = () => {
 
             <div className=" z-[10] relative h-full w-full flex flex-col items-center justify-center text-white">
               <div className="heading-cont absolute top-30 overflow-hidden w-fit h-fit ">
-                <h1 className="heading  font-perfectly-nineties text-3xl md:text-7xl tracking-tight">
-                  GSAP + Locomotive demo
-                </h1>
+                
               </div>
 
               <div className="text-container flex items-center w-full gap-10 h-[40%] justify-center ">
                 <div className="blob w-50 h-70 "></div>
                 <div className="blob w-50 h-70 "></div>
-                <div className="heading-cont  overflow-hidden w-[15%] h-fit ">
-                  <p className="para font-inter text-xs">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut,
-                    nisi impedit architecto ipsum similique quasi consectetur
-                    repellat odit quis temporibus.
-                  </p>
-                </div>
+                
               </div>
             </div>
           </div>
@@ -245,7 +234,9 @@ const MainScroll = () => {
         <section className=" w-full h-full bg-black  text-white">
           <SecondSection />
         </section>
-        <section className=" w-full h-full bg-black  text-white"></section>
+        <section className=" bg-black  text-white">
+           <ThirdSection />
+        </section>
       </div>
     </>
   );
